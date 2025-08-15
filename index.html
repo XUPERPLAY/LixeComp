@@ -35,6 +35,19 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .channel-name {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 18px;
+            display: none;
         }
         .channels-container {
             flex: 1;
@@ -77,6 +90,11 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        .channel-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -102,9 +120,14 @@
                 <source src="https://looooooool.footfast.net/event/1.m3u8" type="application/x-mpegURL">
                 Tu navegador no soporta el elemento <code>video</code>.
             </video>
+            <div class="channel-controls">
+                <button onclick="prevChannel()">Canal Anterior</button>
+                <button onclick="nextChannel()">Canal Siguiente</button>
+            </div>
+            <div class="channel-name" id="channelNameDisplay"></div>
         </div>
         <div class="channels-container" id="channelsContainer">
-            <h2>👇👇CANALES👇👇</h2>
+            <h2>CANALES</h2>
             <div id="channelsList"></div>
             <div id="loadMore" style="text-align: center; margin-top: 20px;">
                 <button onclick="loadMoreChannels()">Cargar +Canales</button>
@@ -138,7 +161,8 @@
                 const button = document.createElement('a');
                 button.href = "javascript:void(0);";
                 button.onclick = function() {
-                    loadVideo(`https://looooooool.footfast.net/event/${i}.m3u8`);
+                    loadVideo(`https://looooooool.footfast.net/event/${i}.m3u8`, channelNames[i - 1]);
+                    currentChannel = i;
                 };
                 button.className = "button";
                 button.textContent = channelNames[i - 1];
@@ -160,14 +184,22 @@
         // Cargar los primeros 20 canales al inicio
         loadMoreChannels();
 
-        function loadVideo(url) {
+        function loadVideo(url, channelName) {
             const video = document.getElementById('videoPlayer');
             video.src = url;
             video.load();
             video.play();
+
+            // Mostrar el nombre del canal durante 10 segundos
+            const channelNameDisplay = document.getElementById('channelNameDisplay');
+            channelNameDisplay.textContent = channelName;
+            channelNameDisplay.style.display = 'block';
+            setTimeout(() => {
+                channelNameDisplay.style.display = 'none';
+            }, 10000);
         }
 
-        // Funcionn para filtrar canales
+        // Funcion para filtrar canales
         document.getElementById('channelSearch').addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
             const channels = document.querySelectorAll('.button');
@@ -180,6 +212,21 @@
                 }
             });
         });
+
+        // Funciones para cambiar de canal
+        function nextChannel() {
+            if (currentChannel < 1000) {
+                currentChannel++;
+                loadVideo(`https://looooooool.footfast.net/event/${currentChannel}.m3u8`, channelNames[currentChannel - 1]);
+            }
+        }
+
+        function prevChannel() {
+            if (currentChannel > 1) {
+                currentChannel--;
+                loadVideo(`https://looooooool.footfast.net/event/${currentChannel}.m3u8`);
+            }
+        }
     </script>
 </body>
 </html>
