@@ -67,6 +67,16 @@
             padding: 10px 20px;
             margin-top: auto;
         }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -80,38 +90,41 @@
 <body>
     <div class="header">
         <h1>XUPER-CHANNELS</h1>
-        <img src="https://i.postimg.cc/RV81y11K/IMG-20250805-220533-390.jpg" alt="Logo" class="logo">
+        <img src="https://i.postimg.cc/0QKq131f/logo8-2-222011.png" alt="Logo" class="logo">
     </div>
     <div class="container">
         <div class="video-container">
-            <h2>Reproducir Contenido</h2>
+            <div class="search-container">
+                <input type="text" id="channelSearch" placeholder="Buscar canal...">
+            </div>
+            <h2>XUPERLIST REPRODUCTOR</h2>
             <video id="videoPlayer" width="100%" height="auto" controls>
                 <source src="https://looooooool.footfast.net/event/1.m3u8" type="application/x-mpegURL">
                 Tu navegador no soporta el elemento <code>video</code>.
             </video>
         </div>
         <div class="channels-container" id="channelsContainer">
-            <h2>👇Canales👇</h2>
+            <h2>ðŸ‘‡ðŸ‘‡CANALESðŸ‘‡ðŸ‘‡</h2>
             <div id="channelsList"></div>
             <div id="loadMore" style="text-align: center; margin-top: 20px;">
-                <button onclick="loadMoreChannels()">CARGAR MAS</button>
+                <button onclick="loadMoreChannels()">Cargar mÃ¡s</button>
             </div>
         </div>
     </div>
     <div class="footer">
-        <p>&copy; 2025 Todos los derechos reservados.</p>
+        <p>&copy;Xuperlist 2025 </p>
     </div>
     <script>
         const channelNames = [
-            "Gol", "Fútbol", "Deportes", "Noticias", "Cine", "Música", "Infantil", "Documentales", "Series", "Eventos",
-            // Aquí puedes seguir añadiendo nombres de canales hasta llegar a 1000
+            "Gol", "FÃºtbol", "Deportes", "Noticias", "Cine", "MÃºsica", "Infantil", "Documentales", "Series", "Eventos",
+            // AquÃ­ puedes seguir aÃ±adiendo nombres de canales hasta llegar a 1000
             // Por ejemplo:
-            "Gol 2", "Fútbol 2", "Deportes 2", "Noticias 2", "Cine 2", "Música 2", "Infantil 2", "Documentales 2", "Series 2", "Eventos 2",
-            "Gol 3", "Fútbol 3", "Deportes 3", "Noticias 3", "Cine 3", "Música 3", "Infantil 3", "Documentales 3", "Series 3", "Eventos 3",
-            // ... y así hasta 1000
+            "Gol 2", "FÃºtbol 2", "Deportes 2", "Noticias 2", "Cine 2", "MÃºsica 2", "Infantil 2", "Documentales 2", "Series 2", "Eventos 2",
+            "Gol 3", "FÃºtbol 3", "Deportes 3", "Noticias 3", "Cine 3", "MÃºsica 3", "Infantil 3", "Documentales 3", "Series 3", "Eventos 3",
+            // ... y asÃ­ hasta 1000
         ];
 
-        // Asegúrate de que el array tenga 1000 elementos
+        // AsegÃºrate de que el array tenga 1000 elementos
         while (channelNames.length < 1000) {
             channelNames.push("Canal " + (channelNames.length + 1));
         }
@@ -129,6 +142,7 @@
                 };
                 button.className = "button";
                 button.textContent = channelNames[i - 1];
+                button.dataset.channelName = channelNames[i - 1];
                 channelsList.appendChild(button);
             }
         }
@@ -152,6 +166,20 @@
             video.load();
             video.play();
         }
+
+        // FunciÃ³n para filtrar canales
+        document.getElementById('channelSearch').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const channels = document.querySelectorAll('.button');
+            channels.forEach(channel => {
+                const channelName = channel.dataset.channelName.toLowerCase();
+                if (channelName.includes(searchTerm)) {
+                    channel.style.display = '';
+                } else {
+                    channel.style.display = 'none';
+                }
+            });
+        });
     </script>
 </body>
 </html>
