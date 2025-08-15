@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Video</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .logo {
+            width: 100px;
+            height: auto;
+        }
+        .container {
+            display: flex;
+            flex: 1;
+            margin: 20px;
+        }
+        .video-container {
+            flex: 2;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .channels-container {
+            flex: 1;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            max-height: calc(100vh - 100px);
+        }
+        .button {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+            text-align: center;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 20px;
+            margin-top: auto;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .video-container, .channels-container {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Reproductor de Video</h1>
+        <img src="https://liveboxpro.com/assets/img/background.png" alt="Logo" class="logo">
+    </div>
+    <div class="container">
+        <div class="video-container">
+            <h2>Reproducir Contenido</h2>
+            <video id="videoPlayer" width="100%" height="auto" controls>
+                <source src="https://looooooool.footfast.net/event/1.m3u8" type="application/x-mpegURL">
+                Tu navegador no soporta el elemento <code>video</code>.
+            </video>
+        </div>
+        <div class="channels-container" id="channelsContainer">
+            <h2>Canal</h2>
+            <div id="channelsList"></div>
+            <div id="loadMore" style="text-align: center; margin-top: 20px;">
+                <button onclick="loadMoreChannels()">Cargar más</button>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2025 Todos los derechos reservados.</p>
+    </div>
+    <script>
+        const channelNames = [
+            "Gol", "Fútbol", "Deportes", "Noticias", "Cine", "Música", "Infantil", "Documentales", "Series", "Eventos",
+            // Aquí puedes seguir añadiendo nombres de canales hasta llegar a 1000
+            // Por ejemplo:
+            "Gol 2", "Fútbol 2", "Deportes 2", "Noticias 2", "Cine 2", "Música 2", "Infantil 2", "Documentales 2", "Series 2", "Eventos 2",
+            "Gol 3", "Fútbol 3", "Deportes 3", "Noticias 3", "Cine 3", "Música 3", "Infantil 3", "Documentales 3", "Series 3", "Eventos 3",
+            // ... y así hasta 1000
+        ];
+
+        // Asegúrate de que el array tenga 1000 elementos
+        while (channelNames.length < 1000) {
+            channelNames.push("Canal " + (channelNames.length + 1));
+        }
+
+        let currentChannel = 1;
+        const channelsPerPage = 20;
+
+        function loadChannels(start, end) {
+            const channelsList = document.getElementById('channelsList');
+            for (let i = start; i <= end; i++) {
+                const button = document.createElement('a');
+                button.href = "javascript:void(0);";
+                button.onclick = function() {
+                    loadVideo(`https://looooooool.footfast.net/event/${i}.m3u8`);
+                };
+                button.className = "button";
+                button.textContent = channelNames[i - 1];
+                channelsList.appendChild(button);
+            }
+        }
+
+        function loadMoreChannels() {
+            const nextStart = currentChannel;
+            const nextEnd = currentChannel + channelsPerPage - 1;
+            if (nextEnd > 1000) {
+                document.getElementById('loadMore').style.display = 'none';
+            }
+            loadChannels(nextStart, nextEnd);
+            currentChannel += channelsPerPage;
+        }
+
+        // Cargar los primeros 20 canales al inicio
+        loadMoreChannels();
+
+        function loadVideo(url) {
+            const video = document.getElementById('videoPlayer');
+            video.src = url;
+            video.load();
+            video.play();
+        }
+    </script>
+</body>
+</html>
