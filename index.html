@@ -104,7 +104,7 @@
             </video>
         </div>
         <div class="channels-container" id="channelsContainer">
-            <h2>ðŸ‘‡ðŸ‘‡CANALESðŸ‘‡ðŸ‘‡</h2>
+            <h2>👇👇CANALES👇👇</h2>
             <div id="channelsList"></div>
             <div id="loadMore" style="text-align: center; margin-top: 20px;">
                 <button onclick="loadMoreChannels()">Cargar mÃ¡s</button>
@@ -116,21 +116,21 @@
     </div>
     <script>
         const channelNames = [
-            "Gol", "FÃºtbol", "Deportes", "Noticias", "Cine", "MÃºsica", "Infantil", "Documentales", "Series", "Eventos",
-            // AquÃ­ puedes seguir aÃ±adiendo nombres de canales hasta llegar a 1000
+            "Gol", "Futbol", "Deportes", "Noticias", "Cine", "Musica", "Infantil", "Documentales", "Series", "Eventos",
+            // Aqui puedes seguir añadiendo nombres de canales hasta llegar a 1000
             // Por ejemplo:
-            "Gol 2", "FÃºtbol 2", "Deportes 2", "Noticias 2", "Cine 2", "MÃºsica 2", "Infantil 2", "Documentales 2", "Series 2", "Eventos 2",
-            "Gol 3", "FÃºtbol 3", "Deportes 3", "Noticias 3", "Cine 3", "MÃºsica 3", "Infantil 3", "Documentales 3", "Series 3", "Eventos 3",
-            // ... y asÃ­ hasta 1000
+            "Gol 2", "Futbol 2", "Deportes 2", "Noticias 2", "Cine 2", "Musica 2", "Infantil 2", "Documentales 2", "Series 2", "Eventos 2",
+            "Gol 3", "Futbol 3", "Deportes 3", "Noticias 3", "Cine 3", "Musica 3", "Infantil 3", "Documentales 3", "Series 3", "Eventos 3",
+            // ... y asi hasta 1000
         ];
 
-        // AsegÃºrate de que el array tenga 1000 elementos
+        // Asegurate de que el array tenga 1000 elementos
         while (channelNames.length < 1000) {
             channelNames.push("Canal " + (channelNames.length + 1));
         }
 
         let currentChannel = 1;
-        const channelsPerPage = 20;
+        const channelsPerPage = 50;
 
         function loadChannels(start, end) {
             const channelsList = document.getElementById('channelsList');
@@ -167,7 +167,7 @@
             video.play();
         }
 
-        // FunciÃ³n para filtrar canales
+        // Funcionn para filtrar canales
         document.getElementById('channelSearch').addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
             const channels = document.querySelectorAll('.button');
